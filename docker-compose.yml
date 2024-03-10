@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  database-mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=1832003
+      - MYSQL_DATABASE=HotelManagement
+      - MYSQL_USER=memberhk2t
+      - MYSQL_PASSWORD=33333333
+    ports:
+      - '4000:3306'
+    expose:
+      - 3306
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - DB_PORT=3306
+      - DB_HOST=database-mysql
+    volumes:
+      - ./server:/app
+    ports:
+      - 8080:8080
+
+# docker compose -p management_hotel_hk2t up -d
